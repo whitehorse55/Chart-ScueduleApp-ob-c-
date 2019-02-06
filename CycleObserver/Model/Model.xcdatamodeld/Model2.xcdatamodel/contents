@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="v2" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="7549" systemVersion="14D136" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="ANLButton" representedClassName="ANLButton" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="measure" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLMeasure" inverseName="buttons" inverseEntity="ANLMeasure" syncable="YES"/>
+        <relationship name="segments" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ANLSegment" inverseName="button" inverseEntity="ANLSegment" syncable="YES"/>
+    </entity>
+    <entity name="ANLCurrentMeasure" representedClassName="ANLCurrentMeasure" syncable="YES">
+        <relationship name="measure" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLMeasure" inverseName="currentMeasure" inverseEntity="ANLMeasure" syncable="YES"/>
+        <relationship name="segment" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLSegment" inverseName="currentMeasure" inverseEntity="ANLSegment" syncable="YES"/>
+    </entity>
+    <entity name="ANLCycle" representedClassName="ANLCycle" syncable="YES">
+        <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <relationship name="measure" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLMeasure" inverseName="cycles" inverseEntity="ANLMeasure" syncable="YES"/>
+        <relationship name="segments" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ANLSegment" inverseName="cycle" inverseEntity="ANLSegment" syncable="YES"/>
+    </entity>
+    <entity name="ANLMeasure" representedClassName="ANLMeasure" syncable="YES">
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="dateText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="taktTime" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="timeScale" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <relationship name="buttons" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ANLButton" inverseName="measure" inverseEntity="ANLButton" syncable="YES"/>
+        <relationship name="currentMeasure" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLCurrentMeasure" inverseName="measure" inverseEntity="ANLCurrentMeasure" syncable="YES"/>
+        <relationship name="cycles" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ANLCycle" inverseName="measure" inverseEntity="ANLCycle" syncable="YES"/>
+        <relationship name="operator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLOperator" inverseName="measures" inverseEntity="ANLOperator" syncable="YES"/>
+        <relationship name="photos" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ANLPhoto" inverseName="measure" inverseEntity="ANLPhoto" syncable="YES"/>
+    </entity>
+    <entity name="ANLOperation" representedClassName="ANLOperation" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="operators" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ANLOperator" inverseName="operation" inverseEntity="ANLOperator" syncable="YES"/>
+        <relationship name="organizationTableView" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLOrganizationTableView" inverseName="operation" inverseEntity="ANLOrganizationTableView" syncable="YES"/>
+        <relationship name="process" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLProcess" inverseName="operations" inverseEntity="ANLProcess" syncable="YES"/>
+    </entity>
+    <entity name="ANLOperator" representedClassName="ANLOperator" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="measures" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ANLMeasure" inverseName="operator" inverseEntity="ANLMeasure" syncable="YES"/>
+        <relationship name="operation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLOperation" inverseName="operators" inverseEntity="ANLOperation" syncable="YES"/>
+        <relationship name="organizationTableView" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLOrganizationTableView" inverseName="operator" inverseEntity="ANLOrganizationTableView" syncable="YES"/>
+    </entity>
+    <entity name="ANLOrganization" representedClassName="ANLOrganization" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="organizationTableView" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLOrganizationTableView" inverseName="organization" inverseEntity="ANLOrganizationTableView" syncable="YES"/>
+        <relationship name="processes" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ANLProcess" inverseName="organization" inverseEntity="ANLProcess" syncable="YES"/>
+    </entity>
+    <entity name="ANLOrganizationTableView" representedClassName="ANLOrganizationTableView" syncable="YES">
+        <relationship name="operation" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLOperation" inverseName="organizationTableView" inverseEntity="ANLOperation" syncable="YES"/>
+        <relationship name="operator" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLOperator" inverseName="organizationTableView" inverseEntity="ANLOperator" syncable="YES"/>
+        <relationship name="organization" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLOrganization" inverseName="organizationTableView" inverseEntity="ANLOrganization" syncable="YES"/>
+        <relationship name="process" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLProcess" inverseName="organizationTableView" inverseEntity="ANLProcess" syncable="YES"/>
+    </entity>
+    <entity name="ANLPhoto" representedClassName="ANLPhoto" syncable="YES">
+        <attribute name="data" optional="YES" attributeType="Binary" indexed="YES" syncable="YES"/>
+        <attribute name="date" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="measure" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLMeasure" inverseName="photos" inverseEntity="ANLMeasure" syncable="YES"/>
+    </entity>
+    <entity name="ANLProcess" representedClassName="ANLProcess" syncable="YES">
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="operations" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ANLOperation" inverseName="process" inverseEntity="ANLOperation" syncable="YES"/>
+        <relationship name="organization" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLOrganization" inverseName="processes" inverseEntity="ANLOrganization" syncable="YES"/>
+        <relationship name="organizationTableView" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLOrganizationTableView" inverseName="process" inverseEntity="ANLOrganizationTableView" syncable="YES"/>
+    </entity>
+    <entity name="ANLSegment" representedClassName="ANLSegment" syncable="YES">
+        <attribute name="duration" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="index" optional="YES" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="initialTime" optional="YES" attributeType="Date" syncable="YES"/>
+        <relationship name="button" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLButton" inverseName="segments" inverseEntity="ANLButton" syncable="YES"/>
+        <relationship name="currentMeasure" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLCurrentMeasure" inverseName="segment" inverseEntity="ANLCurrentMeasure" syncable="YES"/>
+        <relationship name="cycle" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ANLCycle" inverseName="segments" inverseEntity="ANLCycle" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="ANLButton" positionX="-585" positionY="-172" width="128" height="118"/>
+        <element name="ANLCurrentMeasure" positionX="-297" positionY="-108" width="128" height="73"/>
+        <element name="ANLCycle" positionX="-155" positionY="-261" width="128" height="88"/>
+        <element name="ANLMeasure" positionX="-360" positionY="-337" width="128" height="208"/>
+        <element name="ANLOperation" positionX="-342" positionY="-463" width="128" height="103"/>
+        <element name="ANLOperator" positionX="-162" positionY="-445" width="128" height="103"/>
+        <element name="ANLOrganization" positionX="-702" positionY="-495" width="128" height="88"/>
+        <element name="ANLOrganizationTableView" positionX="-711" positionY="-351" width="128" height="103"/>
+        <element name="ANLPhoto" positionX="-540" positionY="-270" width="128" height="88"/>
+        <element name="ANLProcess" positionX="-515" positionY="-492" width="128" height="103"/>
+        <element name="ANLSegment" positionX="-162" positionY="-126" width="128" height="133"/>
+    </elements>
+</model>

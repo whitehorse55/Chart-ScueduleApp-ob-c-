@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# Sets a .gitignore for xcode
+curl -s https://bitbucket.org/agbo/gitignore-for-xcode/raw/25cf23481846aec8e214d330de2dccbe94f10360/.gitignore > .gitignore
